@@ -22,6 +22,7 @@ jobs:
         fetch-depth: 0
 
     - name: Download artifacts
+      if: ${{ inputs.pack_lkm || inputs.pack_ksuinit }}
       uses: actions/download-artifact@v8
     
     - name: Prepare LKM files

@@ -14,7 +14,11 @@ mod android {
 
     pub fn ensure_binaries(ignore_if_exist: bool) -> anyhow::Result<()> {
         for file in Asset::iter() {
-            if file == "ksuinit" || file == "waitsys" || file.ends_with(".ko") {
+            if file == "ksuinit"
+                || file == "waitsys"
+                || file.ends_with(".ko")
+                || file.starts_with('.')
+            {
                 // don't extract internal executables and kernel modules
                 continue;
             }
@@ -48,6 +52,11 @@ struct Asset;
 #[cfg(all(target_arch = "riscv64", target_os = "android"))]
 #[derive(RustEmbed)]
 #[folder = "bin/riscv64"]
+struct Asset;
+
+#[cfg(all(target_arch = "arm", target_os = "android"))]
+#[derive(RustEmbed)]
+#[folder = "bin/armv7"]
 struct Asset;
 
 // If not Android, ie. macos, linux, windows, include all architectures.
